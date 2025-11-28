@@ -208,3 +208,4 @@ __marimo__/
 node_modules/
 *.pdf
 chroma*/
+.vscode/
