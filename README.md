@@ -1,5 +1,6 @@
 ### Local Documents agent
     LangGraph + Adaptive RAG Agent + FastAPI + SSE + VUE3
+    We should use local LLM in real env
 
 ##### How to use
     docker-compose up -d
