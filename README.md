@@ -1,6 +1,12 @@
 ### Local Documents agent
     LangGraph + Adaptive RAG Agent + FastAPI + SSE + VUE3
-    We should use local LLM in real env
+
+- We should use local LLM in real env
+- Prepare a pdf file
+- use python conponents.py to index the local doc
+- open the web and search any content shows in doc.
+
+
 
 ##### How to use
     docker-compose up -d
