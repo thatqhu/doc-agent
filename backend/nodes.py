@@ -51,8 +51,12 @@ class RAGNodes:
     # --- 路由与决策函数 ---
     async def route_question(self, state):
         prompt = self.p.ROUTER_PROMPT.format(question=state["question"])
-        res = await self.c.llm_json.ainvoke([SystemMessage(content=self.p.ROUTER_INSTRUCTIONS), HumanMessage(content=prompt)])
-        source = self._parse_json(res).get("datasource", "vectorstore")
+        try:
+            res = await self.c.llm_json.ainvoke([SystemMessage(content=self.p.ROUTER_INSTRUCTIONS), HumanMessage(content=prompt)])
+            source = self._parse_json(res).get("datasource", "vectorstore")
+        except Exception as e:
+            print(f"路由解析失败, 默认使用 vectorstore: {e}")
+            source = "vectorstore"
         print(f"路由方向: {source}")
         return source
 

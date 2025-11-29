@@ -8,28 +8,28 @@ from langchain_community.tools import DuckDuckGoSearchRun
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import DirectoryLoader, PyMuPDFLoader, TextLoader
 from posthog import api_key
+from langchain_ollama import ChatOllama,OllamaEmbeddings
 
 class RAGComponents:
 
     def __init__(self):
-        self.api_key = os.environ.get("DASHSCOPE_API_KEY")
-
         # 1. 初始化模型
-        self.llm = ChatTongyi(
-            model="qwen-plus",
+        self.llm = ChatOllama(
+            model="qwen2.5:3b",
             temperature=0,
-            dashscope_api_key=api_key
+            base_url="http://192.168.2.150:11434"
         )
         # 用于JSON输出的模型实例
-        self.llm_json = ChatTongyi(
-            model="qwen-plus",
+        self.llm_json = ChatOllama(
+            model="qwen2.5:3b",
             temperature=0,
-            dashscope_api_key=self.api_key
+            format="json",
+            base_url="http://192.168.2.150:11434"
         )
 
-        self.embeddings = DashScopeEmbeddings(
-            model="text-embedding-v2",
-            dashscope_api_key=self.api_key
+        self.embeddings = OllamaEmbeddings(
+            model="qwen2.5:3b",
+            base_url="http://192.168.2.150:11434"
         )
 
         # 2. 初始化工具
@@ -84,4 +84,4 @@ class RAGComponents:
 if __name__ == "__main__":
     # 测试组件初始化
     components = RAGComponents()
-    components.setup_vectorstore()
+    components.setup_vectorstore(["./"])
